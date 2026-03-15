@@ -46,14 +46,16 @@ public class Invisible
             if (!Util.IsPlayerValid(invis.Key)) continue;
 
             var currentWeapon = invis.Key.PlayerPawn.Value.WeaponServices.ActiveWeapon.Get().As<CCSWeaponBase>();
-            if (currentWeapon.InReload && !invis.Value.HackyReload)
+            if (currentWeapon.IsValid)
             {
-                var data = Globals.InvisiblePlayers[invis.Key];
-                data.HackyReload = true;
-                Globals.InvisiblePlayers[invis.Key] = data;
-                SetPlayerInvisibleFor(invis.Key, currentWeapon.VData.DisallowAttackAfterReloadStartDuration);
+                if (currentWeapon.InReload && !invis.Value.HackyReload)
+                {
+                    var data = Globals.InvisiblePlayers[invis.Key];
+                    data.HackyReload = true;
+                    Globals.InvisiblePlayers[invis.Key] = data;
+                    SetPlayerInvisibleFor(invis.Key, currentWeapon.VData.DisallowAttackAfterReloadStartDuration);
+                }
             }
-
             
             var alpha = 255f;
 
